@@ -4,77 +4,68 @@ import csv
 budget_data = os.path.join("Resources", "budget_data.csv")
 
 #Lists
-profit_loss = []  #Values in 2nd column
+csv_full = []
+delta_date = []
+
 #Variables
+delta_count = 0
+date_count = 0
+net_total = 0
+profit = 0
+loss = 0
+average_change = int
+difference = int
 
-date_count = float
-net_total = int
-profit = float
-loss = float
-max_date = str
-min_date = str
-average_change = float
-difference = float
 
-        #Date counter. 
+        #Append the csvfile into a list so that csvreader doesn't have to be acessed each time I want to get info from it
 
 with open(budget_data) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
+        
+    next(csvreader, None)    
 
     for row in csvreader:
-        date_count = len(list(csvreader))
+        csv_full.append(row)
+
+        #Date count and Total vales 
+
+date_count = len(csv_full)  
+
+net_total = sum(float(row[1]) for row in csv_full)
+
+
+        #To get the delta of the profit/loss column starting from the 2nd position for the length of csv_full.
+
+for n in range(1,len(csv_full)):  
+
+    difference = (int(csv_full[n][1]))-(int(csv_full[n-1][1])) # difference = ['index' [n] in 'column' [1]] - ['index' [n-1] in column 1 ]  
+     
+    delta_date.append([csv_full[n][0], difference])        #delta_date is a new list that lines up the dates and delta vales to 
+
+delta_count = len(delta_date)
+
+change = sum(int(row[1]) for row in delta_date)/delta_count   #delta/number of changes
+
+average_change = str(round(change, 2)) #round the change to 2 decimal places
+
+        #a function to set the key in the max() function to so it properly iterates through the delta values in delta_date. 
+def value_row(row):
+    return int(row[1])
+
+profit = max(delta_date, key = value_row)
+loss = min (delta_date, key = value_row)
+
     
-##print (date_count)
-
-        #Net total counter. 
-
-with open(budget_data) as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=",")
-
-    for row in csvreader:
-
-        net_total = sum(float(row[1]) for row in csvreader) 
-
-##print (net_total)       
-
-        #Profit/Loss
-
-with open(budget_data) as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=",")
-
-    next(csvreader, None)
-
-    for row in csvreader:
-        
-        profit_loss.append(row[1])
-
-        profit = max(profit_loss, key= float) 
-        loss = min(profit_loss, key = float)
-
-        if (row[1]) == profit:
-            max_date = (row[0])
-        
-        if (row[1]) == loss:
-            min_date = (row[0])
-        
-##print (max_date, min_date)
-        
-
-average = (int(net_total))/(int(date_count))
-
-average_change =round(average,2)
-
-
 statement = (f"Financial Analysis\n" 
             f"----------------------------\n" 
             f"Total Months: {date_count}\n" 
             f"Total: ${int(net_total)}\n" 
             f"Average Change: ${average_change}\n" 
-            f"Greatest Increase in Profits: {max_date} ${profit}\n"
-            f"Greatest Decrease in Profits: {min_date} ${loss}" )
+            f"Greatest Increase in Profits: {profit[0]} ${profit[1]}\n"
+            f"Greatest Decrease in Profits: {loss[0]} ${loss[1]}"  )
 print (statement) 
 
-output_file = os.path.join("Financial_Anaysis.txt")
+output_file = os.path.join("Analysis" , "Financial_Anaysis.txt")
 
 with open(output_file, "w") as export:
     export.write(statement)
