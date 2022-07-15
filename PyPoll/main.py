@@ -1,4 +1,3 @@
-from optparse import Values
 import os
 import csv
 
@@ -18,8 +17,6 @@ ballot_row = []
 
     #variables
 total_count = 0
-max_vote = 0
-dupe_count = 0 
     #Open CSV and append everything to its own list. Headers ignored. 
 
 with open(election_data) as csvfile:
