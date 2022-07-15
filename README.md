@@ -1,6 +1,4 @@
-# Python Challenge
-
-# Task
+#Task
 ### *PyBank*
 >----
 >In this challenge, you are tasked with creating a Python script to analyze the financial records of your company. You will give a set of financial data called `[budget_data.csv]`
