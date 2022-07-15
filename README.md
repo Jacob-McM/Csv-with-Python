@@ -32,7 +32,7 @@ You will be given a set of poll data called `[election_data.csv]`
   
 ### *PyBank*
 
-Opens the included `[budget_data.CSV]` file and appends the contents of the file without its headers to a list. The list is `[Month-Year, Profit/Loss]`. The length of that list is used to get the number of months from the budget period. From the same list, the values in `row[1]` is summed up to return the net total. The changes in profit/losses is gotten from starting on the 1st index(2nd value) of `row[1]` and subtracted from the previous index. A new list is created from these values, lined up with corresponding dates.The list is `[Month-Year, Delta]`.  The delta row is summed up and then divided by the new month-year count from this new list to get the average of delta. A max and min value is also gotten from this list, along with the corresponding dates. 
+Opens the included `[budget_data.csv]` file and appends the contents of the file without its headers to a list. The list is `[Month-Year, Profit/Loss]`. The length of that list is used to get the number of months from the budget period. From the same list, the values in `row[1]` is summed up to return the net total. The changes in profit/losses is gotten from starting on the 1st index(2nd value) of `row[1]` and subtracted from the previous index. A new list is created from these values, lined up with corresponding dates.The list is `[Month-Year, Delta]`.  The delta row is summed up and then divided by the new month-year count from this new list to get the average of delta. A max and min value is also gotten from this list, along with the corresponding dates. 
 
 All of the collected information is printed in the terminal and printed into a .txt file.
 
